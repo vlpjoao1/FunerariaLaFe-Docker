@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% load static %}
+{% block extracss %}
+{% endblock extracss %}
+
+{% block contenido %}
+  <div class="container col-8 border rounded">
+    <br>
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+    {% endif %}
+    {% if perms.personal.delete_personal %}
+    <form id="edicion_form" method="POST" enctype="multipart/form-data" action="{% url 'personal:eliminar_personal' Personal.pk %}">
+      {% csrf_token %}
+        <center>
+        <div class="modal-body">
+          ¿Deseas eliminar este empleado?
+        </div>
+          <a class="btn btn-secondary" href="{% url 'personal:listar_personal' %}">Cancelar</a>
+          <button id="creacion" type="submit" class="btn btn-danger">ELIMINAR</button>  
+        </center>
+    </form>
+    {% else %}
+    <p>No tienes permisos para realizar esta acción.</p>
+    {% endif %}
+  <br>
+  </div>
+  <br>
+{% endblock contenido %}

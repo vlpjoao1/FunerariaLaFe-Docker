@@ -1,0 +1,30 @@
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Historial del Empleado: {{object.historial_empleado}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {% if perms.personal.change_historialpersonal %}
+          <div id="errores_creacion"></div>
+          <form id="edicion_form" method="POST" action="{% url 'personal:editar_historial_personal' object.pk %}">
+            {% csrf_token %}
+            <div class="modal-body">
+              <div id="erroresEdicion">
+                
+              </div>
+              {{ form.as_p}}
+            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrar_modal_edicion();">Cerrar</button>
+            <button id="boton_edicion" type="button" class="btn btn-primary" onclick="editar_historial();">editar</button>
+          </form> 
+        {% else %}
+        <p>No tienes permisos para realizar esta acción.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+

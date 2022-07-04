@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block titulo %}Listado de Usuarios{% endblock titulo %}
+{% block contenido %}
+	{% if perms.users.add_users %}
+		<center><button class="btn btn-primary btn-block col-2" onclick="crear_usuario('{% url 'usuarios:crear_usuarios' %}')">Crear</button></center>
+	{% endif %}
+
+	<br>
+	<div class="table-stats order-table ov-h">
+		<table class="table table-striped" id="tabla_usuario">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Nombre y Apellido:</th>
+					<th scope="col">Correo:</th>
+					<th scope="col">Username:</th>
+					<th scope="col">Permiso:</th>
+					<th scope="col"><center>#</center></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal fade" id="crear_usuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+
+	<div class="modal fade" id="editar_usuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+	
+	<div class="modal fade" id="eliminar_usuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+	
+{% endblock contenido %}
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'usuarios/listar_usuarios.js' %} "></script>
+{% endblock extrajs %}

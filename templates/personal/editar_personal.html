@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% load static %}
+{% block extracss %}
+{% endblock extracss %}
+
+{% block contenido %}
+  <div class="container col-8 border rounded">
+    <br>
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+    {% endif %}
+    {% if perms.personal.change_personal %}
+    <form id="edicion_form" method="POST" enctype="multipart/form-data" action="{% url 'personal:editar_personal' object.pk %}">
+      {% csrf_token %}
+        <div class="modal-body">
+          <div id="errores">
+            
+          </div>
+          {{ form.as_p}}
+        </div>
+        <a class="btn btn-secondary" href="{% url 'personal:listar_personal' %}">Cancelar</a>
+        <button id="creacion" type="submit" class="btn btn-primary">agregar</button> 
+    </form>
+    {% else %}
+    <p>No tienes permisos para realizar esta acción.</p>
+    {% endif %}
+  <br>
+  </div>
+  <br>
+{% endblock contenido %}

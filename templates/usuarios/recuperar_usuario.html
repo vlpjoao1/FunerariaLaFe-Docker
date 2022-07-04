@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="{% static 'css/login.css'%}">
+  
+  <title>Recuperar usuario</title>
+</head>
+<body>
+
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <div class="fadeIn first">
+        <p>Recuperar Usuario</p>
+      </div>
+      
+      {% if error %}
+        <div class="alert alert-danger" role="alert">
+              {{error}}
+          </div>
+      
+    {% endif %}
+      <form method="POST">
+        <center>  
+          <div class="col-10">
+            {% csrf_token %}
+            {{form.as_p}}  
+          </div>
+        </center>
+        <a class="btn btn-danger btn-flat m-b-30 m-t-30" href="{% url 'login' %}">Regresar</a>
+        <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30" value="Log In">Recuperar</button>
+      </form>
+<br>
+    </div>
+  </div>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

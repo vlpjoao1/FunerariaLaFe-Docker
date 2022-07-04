@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block titulo %}Reporte de asistencia{% endblock titulo %}
+
+{% block contenido %}
+<div class="container">
+	<div class="row">
+		<div class="col border-right">	
+			<form method="GET">
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">CI del empleado:</label>
+			    <input type="text" class="form-control" placeholder="CI del empleado" name="empleado" value="{{request.GET.empleado}}">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Rango de fechas:</label>
+			    <input type="text" class="form-control" name="date_range">
+			    <small id="emailHelp" class="form-text text-muted">Ingresa un rango de fechas para realizar la búsqueda.</small>
+			  </div>
+			  <button type="submit" class="btn btn-primary">Buscar</button>
+			</form>
+		</div>
+		<div class="col">	
+			<form method="POST">
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">CI del empleado:</label>
+			    <input type="text" class="form-control" placeholder="CI del empleado" name="empleado" value="{{request.GET.empleado}}">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Rango de fechas:</label>
+			    <input type="text" class="form-control" name="date_range">
+			    <small id="emailHelp" class="form-text text-muted">Ingresa un rango de fechas para realizar la búsqueda.</small>
+			  </div>
+			  <button type="submit" class="btn btn-primary">Generar Reporte</button>
+			</form>
+		</div>
+	</div>
+</div>
+<hr>	
+<div class="table-stats order-table ov-h">
+	{% if error %}
+		<center><h1>{{error}}</h1></center>
+	{% else %}
+		<table class="table" id="tabla_reporte">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Empleado:</th>
+					<th scope="col">Hora/Fecha de entrada:</th>
+					<th scope="col">Hora/Fecha de salida:</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for i in asistencias  %}
+					{% if i.si_trabajo == "Si asistió"  %}
+						<tr>
+							<td>{{i.id_bitacora}}</td>
+							<td>{{i.empleado}}</td>
+							<td>{{i.hora_entrada}}, {{i.fecha_entrada}}</td>
+							<td>{{i.hora_salida}}, {{i.fecha_salida}}</td>
+						</tr>
+					{% endif %}
+					{%if i.si_trabajo == "No asistió" %}
+						<tr class="bg-warning">
+							<td>{{i.id_bitacora}}</td>
+							<td>{{i.empleado}}</td>
+							<td>No asistió la fecha: {{i.fecha_entrada}}</td>
+							<td>No asistió la fecha: {{i.fecha_entrada}}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endif %}	
+{% endblock contenido %}
+{% block extrajs %}
+ <script type="text/javascript" src="{% static 'daterange/moment.min.js' %}"></script>
+ <script type="text/javascript" src="{% static 'daterange/spanish.js' %}"></script>
+ <script type="text/javascript" src="{% static 'daterange/daterangepicker.js' %}"></script>
+ <link rel="stylesheet" type="text/css" href="{% static 'daterange/daterangepicker.css' %}">
+ <script type="text/javascript">
+ $(function(){
+	$('input[name="date_range"]').daterangepicker().daterangepicker({
+		locale:{
+			format: 'YYYY-MM-DD'
+		},
+		showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        showOn: "button",
+        minDate: new Date(2021, 1 - 1, 1),
+        maxDate: '+30Y',
+        inline: true
+	});
+	generar_reporte();
+});</script>
+{% endblock extrajs %}

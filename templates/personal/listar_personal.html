@@ -1,0 +1,83 @@
+{% extends "index.html" %}
+{% load static %}
+{% block titulo %}
+	Personal
+{% endblock titulo %}
+{% block contenido %}
+{% if perms.personal.add_personal %}
+	<center><button class="btn btn-primary btn-block col-2" onclick="abrir_modal_creacion('{% url 'personal:crear_personal' %}')">Crear</button></center>
+{% endif %}
+	<br>
+	{% if messages %}
+		{% for i in messages %}
+			{% if i.tags == "success" %}
+				<div class="alert alert-success" role="alert">
+		  			{{i}}
+				</div>
+			{% else %}
+				<div class="alert alert-danger" role="alert">
+		  			{{i}}
+				</div>
+			{% endif %}
+			
+		{% endfor %}
+	{% endif %}
+
+<div class="card-columns" id="columna_de_cartas">
+	{% if object_list %}
+		{% for i in object_list %}
+		  <div class="card">
+		    <img class="card-img-top" src="/media/{{i.foto}}" alt="Card image cap" id="image_empleado" style="max-width: 100%;">
+		    <div class="card-body">
+		      <h5 class="card-title">{{i.apellidos}},{{i.nombres}}</h5>
+		      <p class="card-text">Cédula:{{i.cedula}}</p>
+		      <p class="card-text">Dirección:{{i.direccion}}</p>
+		      <p class="card-text">Teléfono:{{i.telefono}}</p>
+		      <p class="card-text">Fecha de ingreso:{{i.fecha_de_ingreso}}</p>
+		    </div>
+		    <div class="card-footer">
+		    	<center>
+		    		{% if perms.personal.change_personal %}
+		      			<a class="btn btn-primary" href="{% url 'personal:editar_personal' i.id %}">EDITAR</a>
+					{% endif %}
+					{% if perms.personal.delete_personal %}
+		      			<a class="btn btn-danger" href="{% url 'personal:eliminar_personal' i.id %}">ELIMINAR</a>
+					{% endif %}
+		    	</center>
+	    	</div>
+		  </div>
+		{% endfor %}
+		
+	{% else %}
+		<center><h1>No hay personal registrado.</h1></center>
+	{% endif %}
+
+</div>
+	<div class="modal fade" id="crear_personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+
+	<div class="modal fade" id="editar_personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+	
+	<div class="modal fade" id="eliminar_personal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+{% endblock contenido %}
+
+{% block extrajs %}
+<script>
+function abrir_modal_creacion(url){
+	$('#crear_personal').load(url,function(){
+		$(this).modal('show');
+	});
+}
+function cerrar_modal(){
+	$('#crear_personal').modal('hide');
+}
+
+function abrir_modal_edicion(url){
+	$('#editar_personal').load(url,function(){
+		$(this).modal('show');
+	});
+}
+function cerrar_modal(){
+	$('#editar_personal').modal('hide');
+}
+</script>
+{% endblock extrajs %}

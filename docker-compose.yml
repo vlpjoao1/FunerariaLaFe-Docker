@@ -1,0 +1,16 @@
+#version de docker-compose que estamos usando
+version: '1.29.2'
+
+services:
+  web:
+    #Compose compila desde este directorio
+    build: .
+    #comando que va a lanzar el servidor
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      #<local_path>:<container_path>
+      - .:/code
+    ports:
+      #que el 8000 será el que esté abierto
+      - "8000:8000"
+      

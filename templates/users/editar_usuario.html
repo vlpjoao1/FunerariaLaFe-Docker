@@ -1,0 +1,31 @@
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Usuario: {{object.username}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      {% if perms.users.change_users %}
+        <div id="errores_creacion"></div>
+        <div id="errores_creacion_fecha"></div>
+        <form id="edicion_form" method="POST" action="{% url 'usuarios:editar_usuario' object.pk %}">
+  		  {% csrf_token %}
+          <div class="modal-body">
+            <div id="erroresEdicion">
+              
+            </div>
+    	  		{{ form.as_p}}
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrar_modal_edicion();">Cerrar</button>
+          <button id="boton_edicion" type="button" class="btn btn-primary" onclick="pre_editar();">editar</button>
+  	    </form>
+      {% else %}
+        <p>No tienes permisos para realizar esta acción.</p>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+
+

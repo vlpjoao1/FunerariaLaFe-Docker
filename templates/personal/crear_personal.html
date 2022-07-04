@@ -1,0 +1,36 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Agregar Empleado</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+    {% if perms.personal.add_personal %}
+     {% if error %}
+        <div class="alert alert-danger" role="alert">
+          {{error}}
+        </div>
+    {% endif %}
+
+    <form id="creacion_form" method="POST" enctype="multipart/form-data" action="{% url 'personal:crear_personal' %}">
+      {% csrf_token %}
+        <div class="modal-body">
+          <div id="errores">
+            
+          </div>
+          {{ form.as_p}}
+        </div>
+        <a class="btn btn-secondary" href="{% url 'personal:listar_personal' %}">Cancelar</a>
+        <button id="creacion" type="submit" class="btn btn-primary">agregar</button> 
+    </form>
+    {% else %}
+    <p>No tienes permisos para realizar esta acción.</p>
+    {% endif %}
+    </div>
+  </div>
+</div>
+
+
+

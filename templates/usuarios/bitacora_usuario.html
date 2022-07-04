@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% load static %}
+{% block extracss %}
+	
+{% endblock extracss %}
+{% block contenido %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Usuario</th>
+      <th scope="col">Acción</th>
+      <th scope="col">Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for i in object_list %}
+    <tr>
+      <th scope="row">{{i.usuario}}</th>
+      <td>{{i.accion}}</td>
+      <td>{{i.fecha_accion}}</td>
+    </tr>
+
+  	{% endfor %}
+  </tbody>
+</table>
+	
+{% endblock contenido %}
+

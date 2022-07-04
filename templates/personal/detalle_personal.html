@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block contenido %}
+<style type="text/css">
+	.card{
+		margin:auto;
+	}
+</style>
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{ object.foto.url }}" alt="Card image cap">
+  <div class="card-body">
+  	<h5 class="card-title">{{object.nombres}}, {{object.apellidos}}.</h5>
+    <p class="card-text">{{object.direccion}}.</p>
+  </div>
+</div>
+<br>
+{% endblock contenido %}

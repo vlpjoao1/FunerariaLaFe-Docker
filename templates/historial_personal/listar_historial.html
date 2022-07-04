@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block titulo %}Listado de Historial{% endblock titulo %}
+{% block contenido %}
+	{% if perms.personal.add_historialpersonal %}
+		<center><button class="btn btn-primary btn-block col-2" onclick="crear_historial_personal('{% url 'personal:crear_historial_personal' %}')">Crear</button></center>
+	{% endif %}
+
+	<br>
+	<div class="table-stats order-table ov-h">
+		<table class="table table-striped" id="tabla_historial">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Empleado:</th>
+					<th scope="col">Acotación:</th>
+					<th scope="col">Fecha de acotación:</th>
+					<th scope="col"><center>#</center></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal fade" id="crear_historial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+
+	<div class="modal fade" id="editar_historial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+	
+	<div class="modal fade" id="eliminar_historial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"></div>
+	
+{% endblock contenido %}
+{% block extrajs %}
+	<script type="text/javascript" src="{% static 'personal/listado_historial_personal.js' %} "></script>
+{% endblock extrajs %}
